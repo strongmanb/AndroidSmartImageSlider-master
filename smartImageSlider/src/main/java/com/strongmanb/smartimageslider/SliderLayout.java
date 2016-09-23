@@ -2,14 +2,18 @@ package com.strongmanb.smartimageslider;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 
 import com.strongmanb.smartimageslider.Animations.BaseAnimationInterface;
@@ -102,6 +106,25 @@ public class SliderLayout extends RelativeLayout{
      */
     private PagerIndicator mIndicator;
 
+    /**
+     * click jump over remain time textView
+     */
+    private TextView mRemainTimeTv;
+
+    /**
+     * click jump over remain time title
+     */
+    private TextView mRemaintTimeTitle;
+
+    /**
+     * Remain layout
+     */
+    private View mRemainLayout;
+
+    /**
+     * defualt remain time to navigate to other page
+     */
+    private short mRemainTime = 5;
 
     /**
      * A timer and a TimerTask using to cycle the {@link com.strongmanb.smartimageslider.Tricks.ViewPagerEx}.
@@ -114,6 +137,21 @@ public class SliderLayout extends RelativeLayout{
      */
     private Timer mResumingTimer;
     private TimerTask mResumingTask;
+
+    /**
+     * A timer and a TimerTask using to navigate to another page
+     */
+    private Timer mRemainTimer;
+    private TimerTask mRemainTask;
+
+    private long mRemainDuration = 1000;
+    /**
+     * is show remain counter
+     */
+    private boolean isShowRemainCounter;
+
+
+
 
     /**
      * If {@link com.strongmanb.smartimageslider.Tricks.ViewPagerEx} is Cycling
@@ -177,6 +215,24 @@ public class SliderLayout extends RelativeLayout{
         mTransformerSpan = attributes.getInteger(R.styleable.SliderLayout_pager_animation_span, 1100);
         mTransformerId = attributes.getInt(R.styleable.SliderLayout_pager_animation, Transformer.Default.ordinal());
         mAutoCycle = attributes.getBoolean(R.styleable.SliderLayout_auto_cycle,true);
+
+        //is show remain counter
+        if(isShowRemainCounter) {
+            mRemainLayout = findViewById(R.id.slider_click_jump_over);
+            mRemainTimeTv = (TextView) findViewById(R.id.slider_click_jump_over_remain_time);
+            mRemaintTimeTitle = (TextView) findViewById(R.id.slider_click_jump_over_remain_time_title);
+            isShowRemainCounter = attributes.getBoolean(R.styleable.SliderLayout_is_show_remain_counter, false);
+            int remainTimeTextColor = attributes.getColor(R.styleable.SliderLayout_remain_time_text_color, Color.rgb(0, 0, 0));
+            float remainTimeTextSize = attributes.getDimension(R.styleable.SliderLayout_remain_time_text_size, 12);
+
+            mRemainTimeTv.setTextColor(remainTimeTextColor);
+            mRemaintTimeTitle.setTextColor(remainTimeTextColor);
+            mRemainTimeTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, remainTimeTextSize);
+            mRemaintTimeTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, remainTimeTextSize);
+            mRemainLayout.setVisibility(View.VISIBLE);
+            startRemainCount();
+        }
+
         int visibility = attributes.getInt(R.styleable.SliderLayout_indicator_visibility,0);
         for(PagerIndicator.IndicatorVisibility v: PagerIndicator.IndicatorVisibility.values()){
             if(v.ordinal() == visibility){
@@ -187,7 +243,7 @@ public class SliderLayout extends RelativeLayout{
         mSliderAdapter = new SliderAdapter(mContext);
         PagerAdapter wrappedAdapter = new InfinitePagerAdapter(mSliderAdapter);
 
-        mViewPager = (InfiniteViewPager)findViewById(R.id.daimajia_slider_viewpager);
+        mViewPager = (InfiniteViewPager)findViewById(R.id.slider_viewpager);
         mViewPager.setAdapter(wrappedAdapter);
 
         mViewPager.setOnTouchListener(new OnTouchListener() {
@@ -203,6 +259,8 @@ public class SliderLayout extends RelativeLayout{
             }
         });
 
+
+
         attributes.recycle();
         setPresetIndicator(PresetIndicators.Center_Bottom);
         setPresetTransformer(mTransformerId);
@@ -212,6 +270,8 @@ public class SliderLayout extends RelativeLayout{
             startAutoCycle();
         }
     }
+
+
 
     public void addOnPageChangeListener(ViewPagerEx.OnPageChangeListener onPageChangeListener){
         if(onPageChangeListener != null){
@@ -241,9 +301,48 @@ public class SliderLayout extends RelativeLayout{
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            moveNextPosition(true);
+            switch (msg.what) {
+                case 0:   //move to next position
+                    moveNextPosition(true);
+                    break;
+                case 1:   //remain count
+                    mRemainTimeTv.setText(String.valueOf(mRemainTime));
+                    break;
+                default:
+                    break;
+            }
         }
     };
+
+    /**
+     * start Remain Count
+     */
+    public void startRemainCount() {
+        if(mRemainTimer != null) mRemainTimer.cancel();
+        if(mRemainTask != null) mRemainTask.cancel();
+        mRemainTimer = new Timer();
+        mRemainTask = new TimerTask() {
+            @Override
+            public void run() {
+                mh.sendEmptyMessage(1);
+                mRemainTime --;
+            }
+        };
+        mRemainTimer.schedule(mRemainTask, 0, mRemainDuration);
+    }
+
+
+    /**
+     * pause Remain Count
+     */
+    public void pauseRemainCount() {
+        if(mRemainTask != null)
+            mRemainTask.cancel();
+        if(mRemainTimer != null)
+            mRemainTimer.cancel();
+    }
+
+
 
     public void startAutoCycle(){
         startAutoCycle(mSliderDuration, mSliderDuration, mAutoRecover);
@@ -331,7 +430,7 @@ public class SliderLayout extends RelativeLayout{
         }
 
         if(!mCycling){
-            if(mResumingTask != null && mResumingTimer!= null){
+            if(mResumingTask != null && mResumingTimer != null){
                 mResumingTimer.cancel();
                 mResumingTask.cancel();
             }
@@ -342,7 +441,7 @@ public class SliderLayout extends RelativeLayout{
                     startAutoCycle();
                 }
             };
-            mResumingTimer.schedule(mResumingTask, 6000);
+            mResumingTimer.schedule(mResumingTask, mSliderDuration);
         }
     }
 
@@ -386,6 +485,23 @@ public class SliderLayout extends RelativeLayout{
         }catch (Exception e){
 
         }
+    }
+
+
+    public long getRemainTimerDuration() {
+        return mRemainDuration;
+    }
+
+    public void setmRemainTimerDuration(long remainDuration) {
+        this.mRemainDuration = remainDuration;
+    }
+
+    public short getmRemainTime() {
+        return mRemainTime;
+    }
+
+    public void setmRemainTime(short mRemainTime) {
+        this.mRemainTime = mRemainTime;
     }
 
     /**
@@ -699,4 +815,7 @@ public class SliderLayout extends RelativeLayout{
     public void moveNextPosition() {
         moveNextPosition(true);
     }
+
+
+
 }

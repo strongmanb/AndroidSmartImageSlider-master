@@ -32,6 +32,16 @@
 
         <!-- page animation time span -->
         <attr name="pager_animation_span" format="integer"/>
+        
+        <!-- remain time -->
+        <attr name="is_show_remain_counter" format="boolean" />
+        <attr name="remain_time_total" format="integer"/>
+        <attr name="remain_time_text_size" format="dimension" />
+        <attr name="remain_time_text_color" format="color" />
+        <attr name="remain_time_padding_left" format="dimension"/>
+        <attr name="remain_time_padding_right" format="dimension"/>
+        <attr name="remain_time_padding_top" format="dimension"/>
+        <attr name="remain_time_padding_bottom" format="dimension"/>
 
     </declare-styleable>
 

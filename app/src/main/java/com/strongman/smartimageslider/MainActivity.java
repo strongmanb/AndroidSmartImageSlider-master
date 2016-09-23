@@ -1,8 +1,7 @@
 package com.strongman.smartimageslider;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.AndroidCharacter;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,11 +11,9 @@ import android.widget.Toast;
 import com.strongmanb.smartimageslider.Animations.DescriptionAnimation;
 import com.strongmanb.smartimageslider.SliderLayout;
 import com.strongmanb.smartimageslider.SliderTypes.BaseSliderView;
-import com.strongmanb.smartimageslider.SliderTypes.DefaultSliderView;
 import com.strongmanb.smartimageslider.SliderTypes.TextSliderView;
 import com.strongmanb.smartimageslider.Tricks.ViewPagerEx;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
