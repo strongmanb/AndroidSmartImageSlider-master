@@ -88,6 +88,10 @@
 
     </declare-styleable>
 
+    <declare-styleable name="SplashLayout">
+
+    </declare-styleable>
+
     <declare-styleable name="Themes">
         <attr name="SliderStyle" format="reference"/>
         <attr name="PagerIndicatorStyle" format="reference"/>

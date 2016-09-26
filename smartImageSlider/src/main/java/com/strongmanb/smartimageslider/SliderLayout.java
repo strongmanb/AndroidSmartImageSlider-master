@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 
 import com.strongmanb.smartimageslider.Animations.BaseAnimationInterface;
 import com.strongmanb.smartimageslider.Indicators.PagerIndicator;
@@ -217,7 +215,7 @@ public class SliderLayout extends RelativeLayout{
         mAutoCycle = attributes.getBoolean(R.styleable.SliderLayout_auto_cycle,true);
 
         //is show remain counter
-        if(isShowRemainCounter) {
+        if(true) {
             mRemainLayout = findViewById(R.id.slider_click_jump_over);
             mRemainTimeTv = (TextView) findViewById(R.id.slider_click_jump_over_remain_time);
             mRemaintTimeTitle = (TextView) findViewById(R.id.slider_click_jump_over_remain_time_title);

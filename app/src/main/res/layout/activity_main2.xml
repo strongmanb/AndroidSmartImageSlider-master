@@ -12,6 +12,11 @@
         style="?android:attr/progressBarStyleSmall" />
 -->
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="fd;ksajfkldsjf"/>
+
 
     <com.strongmanb.smartimageslider.SliderLayout
         android:id="@+id/slider"
@@ -24,7 +29,9 @@
         custom:is_show_remain_counter="true"
         custom:remain_time_text_color="@android:color/white"
         custom:remain_time_text_size="13sp"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
