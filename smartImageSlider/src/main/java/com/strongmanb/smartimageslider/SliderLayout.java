@@ -43,6 +43,8 @@ import java.lang.reflect.Field;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.xml.transform.Transformer;
+
 /**
  * SliderLayout is compound layout
  *
@@ -104,20 +106,6 @@ public class SliderLayout extends RelativeLayout{
      */
     private PagerIndicator mIndicator;
 
-    /**
-     * click jump over remain time textView
-     */
-    private TextView mRemainTimeTv;
-
-    /**
-     * click jump over remain time title
-     */
-    private TextView mRemaintTimeTitle;
-
-    /**
-     * Remain layout
-     */
-    private View mRemainLayout;
 
     /**
      * defualt remain time to navigate to other page
@@ -135,21 +123,6 @@ public class SliderLayout extends RelativeLayout{
      */
     private Timer mResumingTimer;
     private TimerTask mResumingTask;
-
-    /**
-     * A timer and a TimerTask using to navigate to another page
-     */
-    private Timer mRemainTimer;
-    private TimerTask mRemainTask;
-
-    private long mRemainDuration = 1000;
-    /**
-     * is show remain counter
-     */
-    private boolean isShowRemainCounter;
-
-
-
 
     /**
      * If {@link com.strongmanb.smartimageslider.Tricks.ViewPagerEx} is Cycling
@@ -213,23 +186,6 @@ public class SliderLayout extends RelativeLayout{
         mTransformerSpan = attributes.getInteger(R.styleable.SliderLayout_pager_animation_span, 1100);
         mTransformerId = attributes.getInt(R.styleable.SliderLayout_pager_animation, Transformer.Default.ordinal());
         mAutoCycle = attributes.getBoolean(R.styleable.SliderLayout_auto_cycle,true);
-
-        //is show remain counter
-        if(true) {
-            mRemainLayout = findViewById(R.id.slider_click_jump_over);
-            mRemainTimeTv = (TextView) findViewById(R.id.slider_click_jump_over_remain_time);
-            mRemaintTimeTitle = (TextView) findViewById(R.id.slider_click_jump_over_remain_time_title);
-            isShowRemainCounter = attributes.getBoolean(R.styleable.SliderLayout_is_show_remain_counter, false);
-            int remainTimeTextColor = attributes.getColor(R.styleable.SliderLayout_remain_time_text_color, Color.rgb(0, 0, 0));
-            float remainTimeTextSize = attributes.getDimension(R.styleable.SliderLayout_remain_time_text_size, 12);
-
-            mRemainTimeTv.setTextColor(remainTimeTextColor);
-            mRemaintTimeTitle.setTextColor(remainTimeTextColor);
-            mRemainTimeTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, remainTimeTextSize);
-            mRemaintTimeTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, remainTimeTextSize);
-            mRemainLayout.setVisibility(View.VISIBLE);
-            startRemainCount();
-        }
 
         int visibility = attributes.getInt(R.styleable.SliderLayout_indicator_visibility,0);
         for(PagerIndicator.IndicatorVisibility v: PagerIndicator.IndicatorVisibility.values()){
@@ -303,42 +259,12 @@ public class SliderLayout extends RelativeLayout{
                 case 0:   //move to next position
                     moveNextPosition(true);
                     break;
-                case 1:   //remain count
-                    mRemainTimeTv.setText(String.valueOf(mRemainTime));
-                    break;
                 default:
                     break;
             }
         }
     };
 
-    /**
-     * start Remain Count
-     */
-    public void startRemainCount() {
-        if(mRemainTimer != null) mRemainTimer.cancel();
-        if(mRemainTask != null) mRemainTask.cancel();
-        mRemainTimer = new Timer();
-        mRemainTask = new TimerTask() {
-            @Override
-            public void run() {
-                mh.sendEmptyMessage(1);
-                mRemainTime --;
-            }
-        };
-        mRemainTimer.schedule(mRemainTask, 0, mRemainDuration);
-    }
-
-
-    /**
-     * pause Remain Count
-     */
-    public void pauseRemainCount() {
-        if(mRemainTask != null)
-            mRemainTask.cancel();
-        if(mRemainTimer != null)
-            mRemainTimer.cancel();
-    }
 
 
 
@@ -400,7 +326,7 @@ public class SliderLayout extends RelativeLayout{
     }
 
     /**
-     * stop the auto circle
+     * alreadyStop the auto circle
      */
     public void stopAutoCycle(){
         if(mCycleTask!=null){
@@ -474,33 +400,17 @@ public class SliderLayout extends RelativeLayout{
      * @param period
      * @param interpolator
      */
-    public void setSliderTransformDuration(int period,Interpolator interpolator){
-        try{
+    public void setSliderTransformDuration(int period,Interpolator interpolator) {
+        try {
             Field mScroller = ViewPagerEx.class.getDeclaredField("mScroller");
             mScroller.setAccessible(true);
-            FixedSpeedScroller scroller = new FixedSpeedScroller(mViewPager.getContext(),interpolator, period);
-            mScroller.set(mViewPager,scroller);
-        }catch (Exception e){
+            FixedSpeedScroller scroller = new FixedSpeedScroller(mViewPager.getContext(), interpolator, period);
+            mScroller.set(mViewPager, scroller);
+        } catch (Exception e) {
 
         }
     }
 
-
-    public long getRemainTimerDuration() {
-        return mRemainDuration;
-    }
-
-    public void setmRemainTimerDuration(long remainDuration) {
-        this.mRemainDuration = remainDuration;
-    }
-
-    public short getmRemainTime() {
-        return mRemainTime;
-    }
-
-    public void setmRemainTime(short mRemainTime) {
-        this.mRemainTime = mRemainTime;
-    }
 
     /**
      * preset transformers and their names

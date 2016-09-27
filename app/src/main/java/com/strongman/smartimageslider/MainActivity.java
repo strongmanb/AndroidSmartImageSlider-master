@@ -29,25 +29,25 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         mSlider = (SliderLayout) findViewById(R.id.slider);
         mListView = (ListView) findViewById(R.id.listview);
 
-        HashMap<String,Integer> file_maps = new HashMap<>();
-        file_maps.put("轮播6",R.mipmap.a);
-        file_maps.put("轮播5",R.mipmap.b);
-        file_maps.put("轮播4",R.mipmap.c);
-        file_maps.put("轮播3", R.mipmap.d);
-        file_maps.put("轮播2", R.mipmap.e);
+        HashMap<String,Integer> resMaps = new HashMap<>();
+        resMaps.put("轮播1",R.mipmap.a);
+        resMaps.put("轮播2",R.mipmap.b);
+        resMaps.put("轮播3",R.mipmap.c);
+        resMaps.put("轮播4", R.mipmap.d);
+        resMaps.put("轮播5", R.mipmap.e);
 
         HashMap<String,String> urlMaps = new HashMap<String, String>();
         urlMaps.put("liying1", "http://img1.imgtn.bdimg.com/it/u=1518387780,868647265&fm=206&gp=0.jpg");
-        urlMaps.put("liying1", "http://img1.imgtn.bdimg.com/it/u=1518387780,868647265&fm=206&gp=0.jpg");
-        urlMaps.put("liying1", "http://img1.imgtn.bdimg.com/it/u=1518387780,868647265&fm=206&gp=0.jpg");
-        urlMaps.put("liying1", "http://img1.imgtn.bdimg.com/it/u=1518387780,868647265&fm=206&gp=0.jpg");
+        urlMaps.put("liying2", "http://img1.imgtn.bdimg.com/it/u=1518387780,868647265&fm=206&gp=0.jpg");
+        urlMaps.put("liying3", "http://img1.imgtn.bdimg.com/it/u=1518387780,868647265&fm=206&gp=0.jpg");
+        urlMaps.put("liying4", "http://img1.imgtn.bdimg.com/it/u=1518387780,868647265&fm=206&gp=0.jpg");
 
-        for(String name : urlMaps.keySet()){
+        for(String name : resMaps.keySet()){
             TextSliderView textSliderView = new TextSliderView(this);
             // initialize a SliderLayout
             textSliderView
                     .description(name)
-                    .image("http://img1.imgtn.bdimg.com/it/u=1518387780,868647265&fm=206&gp=0.jpg")
+                    .image(resMaps.get(name))
                     .empty(R.mipmap.ic_launcher)
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop)
                     .setOnSliderClickListener(this);

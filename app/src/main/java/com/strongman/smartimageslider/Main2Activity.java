@@ -52,15 +52,4 @@ public class Main2Activity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mSlider.startRemainCount();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mSlider.pauseRemainCount();
-    }
 }

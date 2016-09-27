@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">SmartSlider</string>
-    <string name="click_jump_over">点击跳过</string>
+    <string name="click_jump_over">跳过</string>
 </resources>
