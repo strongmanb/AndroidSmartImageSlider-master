@@ -1,7 +1,12 @@
 package com.strongman.smartimageslider;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -9,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.strongmanb.smartimageslider.Animations.DescriptionAnimation;
+import com.strongmanb.smartimageslider.Indicators.PagerIndicator;
 import com.strongmanb.smartimageslider.SliderLayout;
 import com.strongmanb.smartimageslider.SliderTypes.BaseSliderView;
 import com.strongmanb.smartimageslider.SliderTypes.TextSliderView;
@@ -90,6 +96,31 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
     @Override
     public void onSliderClick(BaseSliderView slider) {
         Toast.makeText(this,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_custom_indicator:
+                mSlider.setCustomIndicator((PagerIndicator) findViewById(R.id.custom_indicator));
+                break;
+            case R.id.action_restore_default:
+                mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+                mSlider.setCustomAnimation(new DescriptionAnimation());
+                break;
+            case R.id.action_github:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/strongmanb/AndroidSmartImageSlider-master"));
+                startActivity(browserIntent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
