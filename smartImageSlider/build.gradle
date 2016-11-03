@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-//apply from: 'bintray-release.gradle'
+apply from: 'bintray-release.gradle'
 
 
 android {
@@ -30,8 +30,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.android.support:support-v4:24.0.2'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 

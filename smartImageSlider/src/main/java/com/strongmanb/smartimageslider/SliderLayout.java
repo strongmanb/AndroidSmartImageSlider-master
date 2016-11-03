@@ -435,7 +435,7 @@ public class SliderLayout extends RelativeLayout{
 
         private final String name;
 
-        private Transformer(String s){
+        Transformer(String s){
             name = s;
         }
         public String toString(){

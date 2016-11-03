@@ -38,17 +38,17 @@ public abstract class BaseSliderView {
 
     private boolean mErrorDisappear;
 
-    private ImageLoadListener mLoadListener;
+    protected ImageLoadListener mLoadListener;
 
     private String mDescription;
 
     /**
      * Scale type of the image.
      */
-    private ScaleType mScaleType = ScaleType.CenterCrop;
+    protected ScaleType mScaleType = ScaleType.Fit;
 
     public enum ScaleType{
-        CenterCrop, FitCenterCrop
+        CenterCrop, CenterInside, Fit, FitCenterCrop
     }
 
     protected BaseSliderView(Context context) {

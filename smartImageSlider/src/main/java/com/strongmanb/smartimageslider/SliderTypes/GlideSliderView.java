@@ -1,16 +1,13 @@
 package com.strongmanb.smartimageslider.SliderTypes;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-
-import com.bumptech.glide.DrawableTypeRequest;
-import com.bumptech.glide.Glide;
 
 /**
  * Created by strongman on 2016/9/16.
  */
+@Deprecated
 public abstract class GlideSliderView extends BaseSliderView {
 
     protected GlideSliderView(Context context) {
@@ -19,7 +16,7 @@ public abstract class GlideSliderView extends BaseSliderView {
 
     @Override
     protected void bindEventAndShow(View v, ImageView targetImageView) {
-        final BaseSliderView me = this;
+        /*final BaseSliderView me = this;
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,9 +34,8 @@ public abstract class GlideSliderView extends BaseSliderView {
             getLoadListener().onStart(me);
         }
 
-        DrawableTypeRequest dtr = null;
+        DrawableTypeRequest dtr;
         if(getUrl() != null){
-            Log.i("glide2", getUrl());
             dtr = Glide.with(mContext).load(getUrl());
         }else if(getFile() != null){
             dtr = Glide.with(mContext).load(getFile());
@@ -61,16 +57,17 @@ public abstract class GlideSliderView extends BaseSliderView {
             dtr.error(getError());
         }
 
-        switch (getScaleType()){
+        //dtr.fitCenter();
+        *//*switch (getScaleType()){
             case FitCenterCrop:
                 dtr.fitCenter();
                 break;
             case CenterCrop:
                 dtr.centerCrop();
                 break;
-        }
+        }*//*
 
         dtr.crossFade()
-                .into(targetImageView);
+                .into(targetImageView);*/
     }
 }

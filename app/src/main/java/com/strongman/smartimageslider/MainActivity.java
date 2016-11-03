@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.strongmanb.smartimageslider.Animations.DescriptionAnimation;
 import com.strongmanb.smartimageslider.Indicators.PagerIndicator;
 import com.strongmanb.smartimageslider.SliderLayout;
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
                     .description(name)
                     .image(resMaps.get(name))
                     .empty(R.mipmap.ic_launcher)
-                    .setScaleType(BaseSliderView.ScaleType.CenterCrop)
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
                     .setOnSliderClickListener(this);
 
             //add your extra information

@@ -11,7 +11,7 @@ import com.strongmanb.smartimageslider.R;
 /**
  * This is a slider with a description TextView.
  */
-public class TextSliderView extends GlideSliderView {
+public class TextSliderView extends PicassoSliderView {
     public TextSliderView(Context context) {
         super(context);
     }

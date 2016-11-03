@@ -12,7 +12,7 @@ import com.strongmanb.smartimageslider.R;
  *
  * just extend BaseSliderView, and implement getView() method.
  */
-public class DefaultSliderView extends GlideSliderView {
+public class DefaultSliderView extends PicassoSliderView {
 
     public DefaultSliderView(Context context) {
         super(context);
