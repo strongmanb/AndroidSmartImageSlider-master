@@ -7,7 +7,6 @@ import com.strongmanb.smartimageslider.Animations.DescriptionAnimation;
 import com.strongmanb.smartimageslider.SliderLayout;
 import com.strongmanb.smartimageslider.SliderTypes.BaseSliderView;
 import com.strongmanb.smartimageslider.SliderTypes.DefaultSliderView;
-import com.strongmanb.smartimageslider.SliderTypes.TextSliderView;
 
 import java.util.HashMap;
 
@@ -36,7 +35,7 @@ public class Main2Activity extends AppCompatActivity {
                     .description(name)
                     .image(file_maps.get(name))
                     .empty(R.mipmap.ic_launcher)
-                    .setScaleType(BaseSliderView.ScaleType.CenterCrop);
+                    .setScaleType(BaseSliderView.ScaleType.Fit);
 
             //add your extra information
             textSliderView.bundle(new Bundle());

@@ -45,10 +45,10 @@ public abstract class BaseSliderView {
     /**
      * Scale type of the image.
      */
-    protected ScaleType mScaleType = ScaleType.Fit;
+    protected ScaleType mScaleType = ScaleType.FitXY;
 
     public enum ScaleType{
-        CenterCrop, CenterInside, Fit, FitCenterCrop
+        FitXY, CenterCrop, CenterInside, Fit, FitCenterCrop
     }
 
     protected BaseSliderView(Context context) {

@@ -251,6 +251,11 @@ public class SliderLayout extends RelativeLayout{
         mSliderAdapter.addSlider(imageContent);
     }
 
+
+    public void clearSlider() {
+        mSliderAdapter.removeAllSliders();
+    }
+
     private android.os.Handler mh = new android.os.Handler(){
         @Override
         public void handleMessage(Message msg) {

@@ -4,16 +4,17 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator;
+//import com.squareup.picasso.Callback;
+//import com.squareup.picasso.Picasso;
+//import com.squareup.picasso.RequestCreator;
 
 /**
  * Created by strongman on 2016/9/16.
  */
+@Deprecated
 public abstract class PicassoSliderView extends BaseSliderView {
 
-    private Picasso mPicasso;
+    //private Picasso mPicasso;
 
     protected PicassoSliderView(Context context) {
         super(context);
@@ -21,7 +22,7 @@ public abstract class PicassoSliderView extends BaseSliderView {
 
     @Override
     protected void bindEventAndShow(View v, ImageView targetImageView) {
-        final BaseSliderView me = this;
+        /*final BaseSliderView me = this;
 
         v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,5 +85,6 @@ public abstract class PicassoSliderView extends BaseSliderView {
                 }
             }
         });
+    }*/
     }
 }
